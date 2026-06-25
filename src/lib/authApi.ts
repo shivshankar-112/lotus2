@@ -82,13 +82,13 @@ export async function registerUser(
     console.log(res)
     if (!res.success) throw new Error(res.message || "Registration failed");
     
-    const { name, _id } = res.user;
+    const { name, _id } = res.data.user;
     localStorage.setItem("user", JSON.stringify({ name, id: _id }))
 
     const { token, wallet, user } = res.data;
     return { token, wallet, user };
   } catch (error: any) {
-    throw new Error(error.response?.data.message || "Registration failed")
+    throw new Error(error.response?.data.message || error.message || "Registration failed")
   }
 
 }
