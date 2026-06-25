@@ -108,12 +108,16 @@ export function useAuth(): UseAuthReturn {
     setLoading(true);
     try {
       const { token, wallet, user } = await registerUser(state.phone, username.trim(), password, referralCode);
+      console.log(wallet,user,token, "lko")
       dispatch(setUser(user));
       dispatch(setWallet(wallet));
+
+      console.log("aft did")
 
       setState((s) => ({ ...s, step: "done", isLoading: false, error: null }));
       route.push("/home")
     } catch (error: any) {
+      console.log(error)
       setError(error.response?.data?.message || "Registration failed. Try again.");
     }
   }, [state.phone]);
